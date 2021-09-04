@@ -1,15 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from '../environments/environment';
 
 /** UI Component */
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { AuthenticationPopupComponent } from './authentication-popup/authentication-popup.component';
+
+/** 3rd Party Modules */
+import { CoreModule } from '@abp/ng.core';
+import { registerLocale } from '@abp/ng.core/locale';
+import { NgxsModule } from '@ngxs/store';
 
 /** Matierial Angular Modules */
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -36,7 +41,12 @@ import { MatListModule } from '@angular/material/list';
     MatIconModule,
     MatGridListModule,
     MatBottomSheetModule,
-    MatListModule
+    MatListModule,
+    CoreModule.forRoot({
+      environment,
+      registerLocaleFn: registerLocale(),
+    }),
+    NgxsModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
