@@ -14,6 +14,7 @@
     color="accent"
     class="nav-bar-button login-icon"
     aria-label="Login button"
+    (click)="onAuthenticationClick(AUTH_MODE.Login)"
   >
     Login
   </button>
@@ -22,6 +23,7 @@
     color="accent"
     class="nav-bar-button register-icon"
     aria-label="Register button"
+    (click)="onAuthenticationClick(AUTH_MODE.Register)"
   >
     Register
   </button>

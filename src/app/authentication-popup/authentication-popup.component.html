@@ -1,0 +1,17 @@
+<h2> {{data.authMode === AUTH_MODE.Login ? 'Login' : 'Register' }} Options </h2>
+
+<mat-nav-list>
+    <a mat-list-item (click)="onAuthClick($event, AUTH_TYPE.Email)">
+     <mat-icon>mail</mat-icon>
+      <span mat-line>Email</span>
+      <span *ngIf="data.authMode === AUTH_MODE.Login" mat-line>Login using a registered Email Id and Password</span>
+      <span *ngIf="data.authMode === AUTH_MODE.Register" mat-line>Register using a Email Id and Password</span>
+    </a>
+  
+    <a mat-list-item (click)="onAuthClick($event, AUTH_TYPE.Google)">
+        <mat-icon>g</mat-icon>
+        <span mat-line>Google</span>
+        <span *ngIf="data.authMode === AUTH_MODE.Login" mat-line>Login using your Google account</span>
+        <span *ngIf="data.authMode === AUTH_MODE.Register" mat-line>Register using your Google account</span>
+    </a>
+</mat-nav-list>
