@@ -9,7 +9,9 @@ import { environment } from '../environments/environment';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
-import { AuthenticationPopupComponent } from './authentication-popup/authentication-popup.component';
+import { AuthenticationPopupComponent } from './account/authentication-popup/authentication-popup.component';
+import { LoginComponent } from './account/login/login.component';
+import { RegisterComponent } from './account/register/register.component';
 
 /** 3rd Party Modules */
 import { CoreModule } from '@abp/ng.core';
@@ -24,13 +26,16 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     NavigationBarComponent,
     FooterComponent,
     HomeComponent,
-    AuthenticationPopupComponent
+    AuthenticationPopupComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

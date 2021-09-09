@@ -10,6 +10,7 @@
   <span>MovieApp</span>
   <span class="spacer"></span>
   <button
+    *ngIf="!isUserLoggedIn"
     mat-raised-button
     color="accent"
     class="nav-bar-button login-icon"
@@ -19,6 +20,7 @@
     Login
   </button>
   <button
+    *ngIf="!isUserLoggedIn"
     mat-raised-button
     color="accent"
     class="nav-bar-button register-icon"
@@ -26,5 +28,15 @@
     (click)="onAuthenticationClick(AUTH_MODE.Register)"
   >
     Register
+  </button>
+  <button
+    *ngIf="isUserLoggedIn"
+    mat-raised-button
+    color="accent"
+    class="nav-bar-button logout-icon"
+    aria-label="Logout button"
+    (click)="onLogout()"
+  >
+    Logout
   </button>
 </mat-toolbar>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { AuthenticationPopupComponent } from '../authentication-popup/authentication-popup.component';
+import { AuthenticationPopupComponent } from '../account/authentication-popup/authentication-popup.component';
 import { AuthenticationMode } from '../constants/enums';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { AuthService } from '@abp/ng.core';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -13,7 +15,10 @@ export class NavigationBarComponent implements OnInit {
  AUTH_MODE = AuthenticationMode;
 
  /** constructors */
-  constructor(private _bottomSheetService: MatBottomSheet) { }
+  constructor(
+    private _bottomSheetService: MatBottomSheet, 
+    private oAuthService: OAuthService, 
+    private authService: AuthService) { }
 
   /** component life-cycle hooks */
   ngOnInit(): void {
@@ -24,5 +29,13 @@ export class NavigationBarComponent implements OnInit {
     this._bottomSheetService.open(AuthenticationPopupComponent, {
       data: { authMode: authMode },
     });
+  }
+
+  get isUserLoggedIn(): boolean {
+    return this.oAuthService.hasValidAccessToken();
+  }
+
+  onLogout() {
+    this.authService.logout();
   }
 }

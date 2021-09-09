@@ -1,7 +1,7 @@
 import { AuthService, LoginParams } from '@abp/ng.core';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { AuthenticationMode, AuthenticationType } from '../constants/enums';
+import { AuthenticationMode, AuthenticationType } from '../../constants/enums';
 import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
@@ -15,7 +15,7 @@ export class AuthenticationPopupComponent implements OnInit {
   AUTH_MODE = AuthenticationMode;
   AUTH_TYPE = AuthenticationType;
 
-   /** constructors */
+  /** constructors */
   constructor(private _bottomSheetRef: MatBottomSheetRef<AuthenticationPopupComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: { authMode: AuthenticationMode },
     private authService: AuthService, private oAuthService: OAuthService) { }
@@ -25,17 +25,22 @@ export class AuthenticationPopupComponent implements OnInit {
   }
 
   /** public methods */
-  async onAuthClick(event: MouseEvent, authType: AuthenticationType): Promise<void> {
+  onAuthClick(event: MouseEvent, authType: AuthenticationType) {
     this._bottomSheetRef.dismiss();
     event.preventDefault();
 
-    var x: LoginParams = {
-      username: "",
-      password: ""
-    };
-    //this.authService.navigateToLogin();
-    var t = await this.authService.login(x).toPromise();
-    var tx = this.oAuthService.hasValidAccessToken();
-    var y = this.oAuthService.getIdentityClaims()
+    if(this.data.authMode === this.AUTH_MODE.Login) {
+      if(authType === this.AUTH_TYPE.Email) {
+        this.authService.navigateToLogin();
+      } else {
+        // login using google
+      }
+    } else {
+      if(authType === this.AUTH_TYPE.Email) {
+        // navigate to register page
+      } else {
+        // navigate to google
+      }
+    }
   }
 }
