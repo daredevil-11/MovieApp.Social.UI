@@ -1,1 +1,120 @@
-<p>register works!</p>
+<div class="section">
+  <mat-card class="register-card">
+    <mat-card-title class="align-center">
+      {{
+      "AbpAccount::Register" | abpLocalization
+    }}</mat-card-title>
+    <mat-card-content>
+      <form
+        *ngIf="isSelfRegistrationEnabled"
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+        class="form-group"
+      >
+        <div class="flex-column margin-10">
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label for="input-user-name">{{
+              "AbpAccount::UserName" | abpLocalization
+            }}</mat-label>
+            <input
+              matInput
+              id="input-user-name"
+              class="form-control"
+              formControlName="username"
+            />
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-error *ngIf="doesFieldHaveError('username')">
+              {{
+                "AbpAccount::The {0} field is required."
+                  | abpLocalization: ("AbpAccount::UserName" | abpLocalization)
+              }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="flex-column margin-10">
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label for="input-email-address">{{
+              "AbpAccount::EmailAddress" | abpLocalization
+            }}</mat-label>
+            <input
+              matInput
+              id="input-email-address"
+              class="form-control"
+              formControlName="email"
+            />
+
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="doesFieldHaveError('email')">
+              {{
+                "AbpAccount::The {0} field is required."
+                  | abpLocalization
+                    : ("AbpAccount::EmailAddress" | abpLocalization)
+              }}
+            </mat-error>
+            <mat-error *ngIf="doesFieldHaveError('email', 'email')">
+              {{
+                "The {0} field is not a valid e-mail address."
+                  | abpLocalization
+                    : ("AbpAccount::EmailAddress" | abpLocalization)
+              }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="flex-column margin-10 margin-bottom-20">
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label for="input-password">{{
+              "AbpAccount::Password" | abpLocalization
+            }}</mat-label>
+            <input
+              matInput
+              [type]="hide ? 'password' : 'text'"
+              id="input-password"
+              class="form-control"
+              formControlName="password"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide"
+              class="form-control"
+            >
+              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+            <mat-error *ngIf="doesFieldHaveError('password')">
+              {{
+                "AbpAccount::The {0} field is required."
+                  | abpLocalization: ("AbpAccount::Password" | abpLocalization)
+              }}
+            </mat-error>
+            <mat-error *ngIf="doesFieldHaveError('password', 'any')">
+              {{ "The Password field is invalid." }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      <div class="flex-column margin-10">
+        <button
+          mat-stroked-button
+          color="primary"
+          type="submit"
+          class="mt-2 mb-3 btn btn-primary btn-block"
+          [disabled]="inProgress"
+        >
+          {{ "AbpAccount::Register" | abpLocalization }}
+        </button>
+      </div>
+      </form>
+      <div class="flex-column margin-10 align-center">
+      {{ "AbpAccount::AlreadyRegistered" | abpLocalization }}
+      <a routerLink="/account/login">{{
+        "AbpAccount::Login" | abpLocalization
+      }}</a>
+      </div>
+    </mat-card-content>
+    <mat-card-footer *ngIf="inProgress">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </mat-card-footer>
+  </mat-card>
+</div>

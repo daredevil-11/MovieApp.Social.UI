@@ -1,8 +1,7 @@
-import { AuthService, LoginParams } from '@abp/ng.core';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { AuthenticationMode, AuthenticationType } from '../../constants/enums';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-authentication-popup',
@@ -18,7 +17,7 @@ export class AuthenticationPopupComponent implements OnInit {
   /** constructors */
   constructor(private _bottomSheetRef: MatBottomSheetRef<AuthenticationPopupComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: { authMode: AuthenticationMode },
-    private authService: AuthService, private oAuthService: OAuthService) { }
+    private router: Router) { }
 
   /** component life-cycle hooks */
   ngOnInit(): void {
@@ -31,13 +30,13 @@ export class AuthenticationPopupComponent implements OnInit {
 
     if(this.data.authMode === this.AUTH_MODE.Login) {
       if(authType === this.AUTH_TYPE.Email) {
-        this.authService.navigateToLogin();
+        this.router.navigate(['account/login']);
       } else {
         // login using google
       }
     } else {
       if(authType === this.AUTH_TYPE.Email) {
-        // navigate to register page
+        this.router.navigate(['account/register']);
       } else {
         // navigate to google
       }
