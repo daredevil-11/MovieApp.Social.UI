@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private accountService: AccountService,
+    private authService: AuthService,
     private toasterService: MatSnackBar,
     private router: Router,
     private localizationService: LocalizationService,
@@ -45,17 +45,14 @@ export class LoginComponent implements OnInit {
     this.inProgress = true;
 
     const cred = {
-      userNameOrEmailAddress: this.form.get('username')!.value,
+      username: this.form.get('username')!.value,
       password: this.form.get('password')!.value,
       rememberMe: this.form.get('rememberMe')!.value,
-    } as LoginDto;
+    } as LoginParams;
 
-    this.accountService
+    this.authService
       .login(cred)
       .pipe(
-        switchMap(() => {        
-          return this.router.navigate(['']);
-        }),
         catchError((err) => {
           this.toasterService.open(
             err?.error?.error_description ||
@@ -64,9 +61,9 @@ export class LoginComponent implements OnInit {
             '',
             { duration: 7000 }
           );
+          this.inProgress = false;
           return throwError(err);
-        }),
-        finalize(() => (this.inProgress = false))
+        })
       )
       .subscribe();    
   }
